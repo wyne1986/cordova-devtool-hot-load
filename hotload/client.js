@@ -9,7 +9,7 @@ function patchTargetPlatform(context, platform)
 		if(err){
 			console.error(err);return;
 		}
-		fs.writeFile(path.join(context.opts.projectRoot,'config.xml'),data.replace('src="index.html"','src="http://'+addr.address+':8080/index.html"'),'UTF-8',function(err,data){
+		fs.writeFile(path.join(context.opts.projectRoot,'config.xml'),data.replace('src="index.html"','src="http://'+addr.address+':8686/index.html"'),'UTF-8',function(err,data){
 			if(err){
 				console.error(err);return;
 			}

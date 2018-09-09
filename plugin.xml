@@ -2,7 +2,7 @@
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
            id="cordova-devtool-hot-load"
-      version="0.1.2">
+      version="0.1.3">
 
   <name>Hot Load Develop Tool</name>
   <description>Hot load web page, develop programs use</description>

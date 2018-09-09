@@ -5,7 +5,7 @@ const WebSocket = require('ws');
 const os = require('os');
 let wsg,wss;
 let lastUpdateTime = 0;
-let bundle = 'var ws=new WebSocket("ws://localhost:8282");ws.onopen=function(){console.log("bundle success");};ws.onmessage=function(evt){if(evt.data == "changed"){location.reload();}};ws.onclose=function(){console.log("bundle closed");};';
+let bundle = 'var ws=new WebSocket("ws://localhost:8787");ws.onopen=function(){console.log("bundle success");};ws.onmessage=function(evt){if(evt.data == "changed"){location.reload();}};ws.onclose=function(){console.log("bundle closed");};';
 
 function patchTargetPlatform(context, platform)
 {
@@ -74,7 +74,7 @@ function webserver(root){
 
 	server.deploy(
 		{
-			port:8080,
+			port:8686,
 			root:webroot
 		},
 		function(){
@@ -82,7 +82,7 @@ function webserver(root){
 		}
 	);
 	
-	wss = new WebSocket.Server({ port: 8282 });
+	wss = new WebSocket.Server({ port: 8787 });
 	 
 	wss.on('connection', function connection(ws) {
 		
