@@ -15,8 +15,23 @@ function patchTargetPlatform(context, platform)
 	var platformAPI = require(path.join(platformPath, 'cordova', 'Api'));
 	var platformAPIInstance = new platformAPI();
 	var wwwPath = platformAPIInstance.locations.www;
-	fs.writeFileSync(path.join(wwwPath,'bundle.js'),bundle.replace('localhost',addr.address),'UTF-8');
-	webserver(wwwPath + '/');
+	var root = context.opts.projectRoot + '/www';
+	/* copy platform web files */
+	copyFolder(wwwPath,root,function(){
+		if (err) {
+		  console.error(err);
+		  return;
+	    }
+	});
+	/* create bundle.js */
+	fs.writeFile(path.join(root,'bundle.js'),bundle.replace('localhost',addr.address),'UTF-8',function(err){
+		if(err){
+			console.error(err);
+			return;
+		}
+	});
+	/* start hot load server */
+	webserver(root+'/');
 }
 
 module.exports = function(context)
@@ -63,7 +78,7 @@ function webserver(root){
 			root:webroot
 		},
 		function(){
-			console.log('hot load web server start success, Do not close this command !');
+			console.log('hot load web server start success, Do not close this command ! close server by "CTRL C"');
 		}
 	);
 	
@@ -85,7 +100,7 @@ function webserver(root){
 }
 
 function watchwebs(dir) {
-  fs.watch(dir, (event, filename,dd)=> {
+  fs.watch(dir, (event, filename)=> {
     var diff = Date.now() - lastUpdateTime
     lastUpdateTime = Date.now()
     if (diff < 100) return
@@ -117,4 +132,59 @@ function getServerAddr(){
       }
     }
     return local
+}
+
+function copyFolder(srcDir, tarDir, cb) {
+  fs.readdir(srcDir, function(err, files) {
+    var count = 0
+    var checkEnd = function() {
+      ++count == files.length && cb && cb()
+    }
+
+    if (err) {
+      checkEnd()
+      return
+    }
+
+    files.forEach(function(file) {
+      var srcPath = path.join(srcDir, file)
+      var tarPath = path.join(tarDir, file)
+
+      fs.stat(srcPath, function(err, stats) {
+        if (stats.isDirectory()) {
+          fs.mkdir(tarPath, function(err) {
+            if (!err) {
+				copyFolder(srcPath, tarPath, checkEnd)
+            }
+          })
+        } else {
+          copyFile(srcPath, tarPath, checkEnd)
+        }
+      })
+    })
+    files.length === 0 && cb && cb()
+  })
+}
+
+function copyFile(srcPath, tarPath, cb) {
+  var rs = fs.createReadStream(srcPath)
+  rs.on('error', function(err) {
+    if (err) {
+      console.log('read error', srcPath)
+    }
+    cb && cb(err)
+  })
+
+  var ws = fs.createWriteStream(tarPath)
+  ws.on('error', function(err) {
+    if (err) {
+      console.log('write error', tarPath)
+    }
+    cb && cb(err)
+  })
+  ws.on('close', function(ex) {
+    cb && cb(ex)
+  })
+
+  rs.pipe(ws)
 }
