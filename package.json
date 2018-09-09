@@ -1,0 +1,38 @@
+{
+  "name": "cordova-devtool-hot-load",
+  "version": "0.1.1",
+  "description": "Hot load web page, develop programs used",
+  "cordova": {
+    "id": "cordova-devtool-hot-load",
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  },
+  "keywords": [
+    "cordova",
+    "cordova-ios",
+    "cordova-android",
+	"hot-load",
+	"hotload",
+	"devtool"
+  ],
+  "author": "wyne1986",
+  "license": "MIT",
+  "homepage": "https://github.com/wyne1986/cordova-devtool-hot-load",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wyne1986/cordova-devtool-hot-load"
+  },
+  "bugs": {
+    "url": "https://github.com/wyne1986/cordova-devtool-hot-load/issues"
+  },
+  "engines": {
+    "cordovaDependencies": {
+      ">=0.1.0": {
+        "cordova-ios": ">=4.4.0",
+        "cordova-android": ">=6.2.1"
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+           id="cordova-devtool-hot-load"
+      version="0.1.1">
+
+  <name>Hot Load Develop Tool</name>
+  <description>Hot load web page, develop programs use</description>
+  <license>MIT</license>
+  <keywords>cordova,develop,hot load,devtool</keywords>
+  <allow-navigation href="http://*/*" />
+  <allow-navigation href="https://*/*" />
+  
+  <!-- ios -->
+  <platform name="ios">
+  
+    <hook type="before_build" src="hotload/client.js" />
+    <hook type="after_run" src="hotload/server.js" />
+
+  </platform>
+
+  <!-- android -->
+  <platform name="android">
+  
+    <hook type="before_build" src="hotload/client.js" />
+    <hook type="after_run" src="hotload/server.js" />
+
+  </platform>
+
+</plugin>
