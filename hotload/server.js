@@ -78,7 +78,7 @@ function webserver(root){
 			root:webroot
 		},
 		function(){
-			console.log('hot load web server start success, Do not close this command ! close server by "CTRL C"');
+			console.log('hot load server start,Do not close this command!');
 		}
 	);
 	

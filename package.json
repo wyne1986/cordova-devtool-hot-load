@@ -1,6 +1,6 @@
 {
   "name": "cordova-devtool-hot-load",
-  "version": "0.1.3",
+  "version": "1.0.0",
   "description": "Hot load web page, develop programs used",
   "cordova": {
     "id": "cordova-devtool-hot-load",
